@@ -1,0 +1,144 @@
+﻿body {
+    font: 1em/1.5 sans-serif;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 0 1.5rem 1.5rem;
+}
+
+* {
+    font-weight: inherit;
+    font-size: 1em;
+    margin: 0 0 5px 0;
+    padding: 0;
+    background-repeat: no-repeat;
+    box-sizing: inherit;
+}
+
+img, svg {
+    vertical-align: middle;
+}
+
+.head {
+    margin-top: 3.5rem;
+    text-align: center;
+}
+
+h1 {
+    display: block;
+    font-size: 2em;
+    
+    font-weight: bold;
+}
+
+#editDiv {
+    display: none;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.head__menu {
+    margin-top: 1.125rem;
+}
+
+.head__menu__list {
+    display: flex;
+    justify-content: center;
+}
+
+.head__brand__link {
+    display: inline-block;
+    padding: 1.5rem;
+    max-width: 10.75rem;
+    width: 100%;
+}
+
+.head__brand__image {
+    width: 100%;
+}
+
+.head__menu__link {
+    display: inline-block;
+    padding: .375rem 1.5rem;
+    text-transform: uppercase;
+}
+
+.main {
+    margin-top: 1.5rem;
+    text-align:center;
+}
+
+.splash__img {
+    max-width: 100%;
+    /*height:550px;*/
+}
+
+ul {
+    list-style: none;
+}
+
+.foot {
+    align-items: center;
+    display: flex;
+    margin-top: 1.5rem;
+}
+
+.foot__share__item {
+    display: inline-block;
+}
+
+.foot__copyright {
+    flex: 1 0 auto;
+    font-size: .75em;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+    text-decoration-line: none;
+    text-decoration-style: initial;
+    text-decoration-color: initial;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.create__new__product {
+    /*width: 200px;*/
+    text-align: center;
+    position: center;
+}
+
+button {
+    display: inline-block;
+    color: white;
+    /*font-weight: 200;*/
+    text-decoration: none;
+    user-select: none;
+    padding: .5em 2em;
+    outline: none;
+    border: 2px solid;
+    border-radius: 2px;
+    transition: 0.2s;
+    background-color: black;
+}
+
+button:hover {
+    background-color:dimgray;
+}
+
+h1 {
+    text-align:center;
+}
+
+/*.productText {
+    padding: 5px;
+    font-weight: bold;
+}
+
+button {
+    margin-left: 5px;
+}*/

@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jewelry Web-API CRUD</title>
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container">
+        <header class="head">
+            <h1 class="head__brand">
+                <a class="head__brand__link" href="/homepage.html">
+                    <img class="head__brand__image" src="images/logo.png" alt="Bia Tambelli Creations">
+                </a>
+            </h1>
+            <nav class="head__menu">
+                <ul class="head__menu__list">
+                    <li class="head__menu__item head__menu__item--left">
+                        <a class="head__menu__link" href="#">About</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--center">
+                        <a class="head__menu__link" href="/index.html">Products</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--right">
+                        <a class="head__menu__link" href="mailto:toha_srednii@mail.ru">Contact</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--center">
+                        <a class="head__menu__link" href="#">Bag</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <h1>Изделия</h1>
+
+        <div class="create__new__product">
+            <h3>Добавить новое изделие</h3>
+            <form>
+                <label for="createTitleDiv">Title:</label>
+                <input id="createTitleDiv" type="text" />
+                <label for="createTypeIdDiv">Type Id:</label>
+                <input id="createTypeIdDiv" type="number" />
+                <label for="createPriceDiv">Price:</label>
+                <input id="createPriceDiv" type="number" />
+                <label for="createDescriptionDiv">Description:</label>
+                <input id="createDescriptionDiv" type="text" />
+                <button onclick="createProduct(); return false;">Добавить</button>
+            </form>
+        </div>
+
+        <div id="editDiv">
+            <h3>Редактировать</h3>
+            <form class="my-form">
+                <input type="hidden" id="edit-id">
+                <input type="text" id="edit-title">
+                <input type="number" id="edit-typeid">
+                <input type="number" id="edit-price">
+                <input type="text" id="edit-description">
+                <button onclick="updateProduct(); return false;">Сохранить</button>
+                <a onclick="closeInput()" aria-label="Close">&#10006;</a>
+            </form>
+        </div>
+
+        <h1>Список изделий</h1>
+        <div>
+            <p id="counter"></p>
+            <div id="productsDiv"></div>
+        </div>
+
+        <footer class="foot">
+            <p class="foot__copyright">
+                Лаба © 2019<br>
+            </p>
+            <ul class="foot__share">
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="https://www.instagram.com/astral_vandal/">
+                        <img class="icon icon--lg" src="https://d33wubrfki0l68.cloudfront.net/4b71573f045fa7cdaf776634d87c320bc1415c61/6f39a/images/instagram.svg" alt="Instagram">
+                    </a>
+                </li>
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="#">
+                        <img class="icon icon--lg" src="https://d33wubrfki0l68.cloudfront.net/7815bd84ade75b223e7f16fa195cd4701a26e1d6/3608d/images/facebook.svg" alt="Facebook">
+                    </a>
+                </li>
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="mailto:toha_srednii@mail.ru">
+                        <img class="icon icon--lg" src="https://d33wubrfki0l68.cloudfront.net/a570fe454424b89b25da7743677b59b0a67264ea/2b7d3/images/envelope.svg" alt="Email">
+                    </a>
+                </li>
+            </ul>
+        </footer>
+    </div>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
