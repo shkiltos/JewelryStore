@@ -28,9 +28,9 @@ namespace jewelryStore.Data
 
             var products = new Product[]
             {
-                new Product{typeId = 1, title = "Кольцо всевластия", price = 2000, description="Дает власть"},
-                new Product{typeId = 2, title = "Ожерелье Грация", price = 10000, description="Изящная штука"},
-                new Product{typeId = 3, title = "Браслет с камушками", price = 1000, description="Девчачья безделушка"}
+                new Product{typeId = 1, title = "Кольцо всевластия", price = 2000, description="Дает власть", image = "images/ring1.jpg"},
+                new Product{typeId = 2, title = "Серьги Грация", price = 10000, description="Изящная штука", image ="images/earring1.jpg"},
+                new Product{typeId = 3, title = "Браслет с камушками", price = 1000, description="Девчачья безделушка", image="images/bracelet1.jpg" }
             };
             foreach (Product p in products)
             {

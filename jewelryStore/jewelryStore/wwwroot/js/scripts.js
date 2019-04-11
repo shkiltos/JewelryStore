@@ -29,7 +29,7 @@ function getProducts() {
                 if (products) {
                     var i;
                     for (i in products) {
-                        productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + ' </span>';
+                        productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
                         productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
                         productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
                         //if (typeof products[i].post !== "undefined" && products[i].post.length > 0) {
@@ -57,6 +57,8 @@ function createProduct() {
     priceText = document.querySelector("#createPriceDiv").value;
     let descriptionText = "";
     descriptionText = document.querySelector("#createDescriptionDiv").value;
+    let imageText = "";
+    imageText = document.querySelector("#createImageDiv").value;
     var request = new XMLHttpRequest();
     request.open("POST", uri);
     request.onload = function () {
@@ -69,7 +71,7 @@ function createProduct() {
     request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     //console.log(request);
-    console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, typeId: typeidText, price: priceText, description: descriptionText })));
+    console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, typeId: typeidText, price: priceText, description: descriptionText, image: imageText })));
 }
 
 function editProduct(id) {
@@ -84,6 +86,7 @@ function editProduct(id) {
                 document.querySelector("#edit-title").value = items[i].title;
                 document.querySelector("#edit-price").value = items[i].price;
                 document.querySelector("#edit-description").value = items[i].description;
+                document.querySelector("#edit-image").value = items[i].image;
             }
         }
     }
@@ -95,7 +98,8 @@ function updateProduct() {
         typeId: document.querySelector("#edit-typeid").value,
         title: document.querySelector("#edit-title").value,
         price: document.querySelector("#edit-price").value,
-        description: document.querySelector("#edit-description").value
+        description: document.querySelector("#edit-description").value,
+        image: document.querySelector("#edit-image").value
     };
     var request = new XMLHttpRequest();
     request.open("PUT", uri + Product.id);

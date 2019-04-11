@@ -11,7 +11,7 @@
         <header class="head">
             <h1 class="head__brand">
                 <a class="head__brand__link" href="/homepage.html">
-                    <img class="head__brand__image" src="images/logo.png" alt="Bia Tambelli Creations">
+                    <img class="head__brand__image" src="images/logo.png" alt="Astral Vandal">
                 </a>
             </h1>
             <nav class="head__menu">
@@ -45,6 +45,8 @@
                 <input id="createPriceDiv" type="number" />
                 <label for="createDescriptionDiv">Description:</label>
                 <input id="createDescriptionDiv" type="text" />
+                <label for="createImageDiv">Image:</label>
+                <input id="createImageDiv" type="text" />
                 <button onclick="createProduct(); return false;">Добавить</button>
             </form>
         </div>
@@ -57,6 +59,7 @@
                 <input type="number" id="edit-typeid">
                 <input type="number" id="edit-price">
                 <input type="text" id="edit-description">
+                <input type="text" id="edit-img">
                 <button onclick="updateProduct(); return false;">Сохранить</button>
                 <a onclick="closeInput()" aria-label="Close">&#10006;</a>
             </form>

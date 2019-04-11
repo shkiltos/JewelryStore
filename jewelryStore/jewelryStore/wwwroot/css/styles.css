@@ -21,6 +21,11 @@ img, svg {
     vertical-align: middle;
 }
 
+.product__image {
+    width:10rem;
+    height:10rem;
+}
+
 .head {
     margin-top: 3.5rem;
     text-align: center;
