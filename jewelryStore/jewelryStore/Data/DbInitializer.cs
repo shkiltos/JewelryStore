@@ -16,9 +16,9 @@ namespace jewelryStore.Data
 
             var productTypes = new ProductType[]
             {
-                new ProductType{typeName = "Кольцо"},
-                new ProductType{typeName = "Серьги"},
-                new ProductType{typeName = "Браслет"}
+                new ProductType{typeName = "Ring"},
+                new ProductType{typeName = "Necklace"},
+                new ProductType{typeName = "Bracelet"}
             };
             foreach (ProductType pt in productTypes)
             {
@@ -28,9 +28,9 @@ namespace jewelryStore.Data
 
             var products = new Product[]
             {
-                new Product{typeId = 1, title = "Кольцо всевластия", price = 2000, description="Дает власть", image = "images/ring1.jpg"},
-                new Product{typeId = 2, title = "Серьги Грация", price = 10000, description="Изящная штука", image ="images/earring1.jpg"},
-                new Product{typeId = 3, title = "Браслет с камушками", price = 1000, description="Девчачья безделушка", image="images/bracelet1.jpg" }
+                new Product{typeId = 1, title = "Ring Model RC-M", price = 6000, description="Oxidized sterling silver ring", image = "images/ring1.jpg"},
+                new Product{typeId = 2, title = "Necklace CROW'S PAW", price = 10000, description="Talisman necklace. Oxidized sterling silver", image ="images/necklace1.jpg"},
+                new Product{typeId = 1, title = "Rings WRS", price = 13000, description="Couple of wedding rings. Sterling silver", image="images/ring2.jpg" }
             };
             foreach (Product p in products)
             {

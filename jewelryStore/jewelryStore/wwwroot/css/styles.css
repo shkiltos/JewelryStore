@@ -11,10 +11,10 @@
 * {
     font-weight: inherit;
     font-size: 1em;
-    margin: 0 0 5px 0;
+    /*margin: 0 0 5px 0;*/
     padding: 0;
     background-repeat: no-repeat;
-    box-sizing: inherit;
+    box-sizing: border-box;
 }
 
 img, svg {
@@ -27,14 +27,13 @@ img, svg {
 }
 
 .head {
-    margin-top: 3.5rem;
+    /*margin-top: 3.5rem;*/
     text-align: center;
 }
 
 h1 {
     display: block;
     font-size: 2em;
-    
     font-weight: bold;
 }
 
@@ -109,6 +108,7 @@ a {
 
 a:hover {
     text-decoration: none;
+    color: black;
 }
 
 .create__new__product {
@@ -135,10 +135,13 @@ button:hover {
     background-color:dimgray;
 }
 
-h1 {
-    text-align:center;
+button {
+    width:8rem;
 }
 
+.btn-group {
+    text-align:center;
+}
 /*.productText {
     padding: 5px;
     font-weight: bold;

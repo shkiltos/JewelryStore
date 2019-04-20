@@ -24,20 +24,30 @@ function getProducts() {
         products = JSON.parse(request.responseText);
 
         if (typeof products !== "undefined") {
-            getCount(products.length);
+            //getCount(products.length);
             if (products.length > 0) {
                 if (products) {
                     var i;
                     for (i in products) {
-                        productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
-                        productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
-                        productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
-                        //if (typeof products[i].post !== "undefined" && products[i].post.length > 0) {
-                        //    let j;
-                        //    for (j in products[i].post) {
-                        //        productsHTML += "<p>" + products[i].post[j].content + "</p>";
-                        //    }
-                        //}
+                        //productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
+                        //productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
+                        //productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
+                        productsHTML += '<div class="col-md-4">' +
+                                '<div class="card mb-4 shadow-sm">' +
+                                    '<img src=\"' + products[i].image + '\" width="100%" height="100%" />' +
+                            '<div class="card-body">' +
+                            '<h1>' + products[i].title + '</h1>' +
+                            '<h3>' + products[i].price + '₽</h3>' +
+                            '<p class="card-text">' + products[i].description + '</p>' +
+                                        '<div class="d-flex justify-content-between align-items-center">' +
+                                            '<div class="btn-group">' +
+                                                '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
+                                                '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>' +
+                                            '</div>' +
+                                         '</div>' +
+                                        '</div>' +
+                                    '</div>' +
+                            '</div>';
                     }
                 }
             }
@@ -62,11 +72,12 @@ function createProduct() {
     var request = new XMLHttpRequest();
     request.open("POST", uri);
     request.onload = function () {
-        getproducts();
+        getProducts();
         document.querySelector("#createTitleDiv").value = "";
         document.querySelector("#createTypeIdDiv").value = 1;
         document.querySelector("#createPriceDiv").value = 0;
         document.querySelector("#createDescriptionDiv").value = "";
+        document.querySelector("#createImageDiv").value = "";
     };
     request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
@@ -104,18 +115,18 @@ function updateProduct() {
     var request = new XMLHttpRequest();
     request.open("PUT", uri + Product.id);
     request.onload = function () {
-        getproducts();
+        getProducts();
         closeInput();
     };
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    request.send(JSON.stringify(Product));
+    console.log(request.send(JSON.stringify(Product)));
 }
 
 function deleteProduct(id) {
     let request = new XMLHttpRequest();
     request.open("DELETE", uri + id, false);
     request.onload = function () {
-        getproducts();
+        getProducts();
     };
     request.send();
 }

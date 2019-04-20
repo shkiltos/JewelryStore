@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Jewelry Web-API CRUD</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 
@@ -20,7 +21,7 @@
                         <a class="head__menu__link" href="#">About</a>
                     </li>
                     <li class="head__menu__item head__menu__item--center">
-                        <a class="head__menu__link" href="/index.html">Products</a>
+                        <a class="head__menu__link" href="/index.html" style="border-bottom: 4px solid currentColor;">Products</a>
                     </li>
                     <li class="head__menu__item head__menu__item--right">
                         <a class="head__menu__link" href="mailto:toha_srednii@mail.ru">Contact</a>
@@ -32,43 +33,50 @@
             </nav>
         </header>
 
-        <h1>Изделия</h1>
+        
 
-        <div class="create__new__product">
-            <h3>Добавить новое изделие</h3>
-            <form>
-                <label for="createTitleDiv">Title:</label>
-                <input id="createTitleDiv" type="text" />
-                <label for="createTypeIdDiv">Type Id:</label>
-                <input id="createTypeIdDiv" type="number" />
-                <label for="createPriceDiv">Price:</label>
-                <input id="createPriceDiv" type="number" />
-                <label for="createDescriptionDiv">Description:</label>
-                <input id="createDescriptionDiv" type="text" />
-                <label for="createImageDiv">Image:</label>
-                <input id="createImageDiv" type="text" />
-                <button onclick="createProduct(); return false;">Добавить</button>
-            </form>
-        </div>
+
 
         <div id="editDiv">
-            <h3>Редактировать</h3>
+            <h3>Edit</h3>
             <form class="my-form">
                 <input type="hidden" id="edit-id">
                 <input type="text" id="edit-title">
                 <input type="number" id="edit-typeid">
                 <input type="number" id="edit-price">
                 <input type="text" id="edit-description">
-                <input type="text" id="edit-img">
-                <button onclick="updateProduct(); return false;">Сохранить</button>
+                <input type="text" id="edit-image">
+                <button onclick="updateProduct(); return false;">Save</button>
                 <a onclick="closeInput()" aria-label="Close">&#10006;</a>
             </form>
         </div>
 
-        <h1>Список изделий</h1>
         <div>
             <p id="counter"></p>
-            <div id="productsDiv"></div>
+        </div>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row" id="productsDiv">
+                </div>
+            </div>
+        </div>
+
+        <div class="create__new__product">
+            <h3>Add new product to list</h3>
+            <form>
+                <label for="createTitleDiv">Title:</label>
+                <input id="createTitleDiv" type="text" /><br />
+                <label for="createTypeIdDiv">Type Id:</label>
+                <input id="createTypeIdDiv" type="number" /><br />
+                <label for="createPriceDiv">Price:</label>
+                <input id="createPriceDiv" type="number" /><br />
+                <label for="createDescriptionDiv">Description:</label>
+                <input id="createDescriptionDiv" type="text" /><br />
+                <label for="createImageDiv">Image:</label>
+                <input id="createImageDiv" type="text" /><br />
+                <button onclick="createProduct(); return false;">Add</button>
+            </form>
         </div>
 
         <footer class="foot">
