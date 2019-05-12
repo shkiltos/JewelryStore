@@ -142,11 +142,7 @@ button {
 .btn-group {
     text-align:center;
 }
-/*.productText {
-    padding: 5px;
-    font-weight: bold;
-}
 
-button {
-    margin-left: 5px;
-}*/
+.msgClass {
+    color: red;
+}

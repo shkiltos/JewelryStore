@@ -33,9 +33,28 @@
             </nav>
         </header>
 
-        
 
-
+        <h3>Вход для зарегистрированных пользователей</h3>
+        <form>
+            <div class="msgClass">
+                <div id="msgAuth"></div>
+                <div id="msg"></div>
+                <ul id="formError"></ul>
+            </div>
+            <div>
+                <label for="Email">Email: </label><br />
+                <input type="text" id="Email" name="Email">
+            </div>
+            <div>
+                <label for="Password">Пароль: </label><br />
+                <input type="password" id="Password" name="Password">
+            </div>
+        </form>
+        <button id="loginBtn">Войти</button>
+        <button id="logoffBtn">Выйти</button>
+        <p>
+            <a href="register.html">Регистрация нового пользователя</a>
+        </p>
 
         <div id="editDiv">
             <h3>Edit</h3>
@@ -56,6 +75,7 @@
         </div>
 
         <div class="album py-5 bg-light">
+            ​<div id="actionMsg" class="msgClass"></div>
             <div class="container">
                 <div class="row" id="productsDiv">
                 </div>

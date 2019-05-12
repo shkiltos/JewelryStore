@@ -1,12 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace jewelryStore.Models
 {
-    public partial class Context : DbContext
+    public partial class Context : IdentityDbContext<User>
     {
         #region Constructor
         public Context(DbContextOptions<Context> options) : base(options)
@@ -18,6 +15,8 @@ namespace jewelryStore.Models
         public virtual DbSet<Client> Client { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<Client>(entity =>
             {
                 entity.Property(e => e.name).IsRequired();
