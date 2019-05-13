@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>ASTRAL VANDAL</title>
-    
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
+
     
 </head>
 
@@ -29,16 +29,35 @@
                         <a class="head__menu__link" href="mailto:toha_srednii@mail.ru">Contact</a>
                     </li>
                     <li class="head__menu__item head__menu__item--right">
-                        <a class="head__menu__link" href="/account.html">Bag</a>
+                        <a class="head__menu__link" href="/account.html" style="border-bottom: 4px solid currentColor;">Bag</a>
                     </li>
                 </ul>
             </nav>
         </header>
 
         <main class="main" id="main">
-            <a href="#">
-                <img class="splash__img" src="images/kol3.jpg" alt="">
-            </a>
+            <div></div>
+            <h3>Вход для зарегистрированных пользователей</h3>
+            <form>
+                <div class="msgClass">
+                    <div id="msgAuth"></div>
+                    <div id="msg"></div>
+                    <ul id="formError"></ul>
+                </div>
+                <div>
+                    <label for="Email">Email: </label><br />
+                    <input type="text" id="Email" name="Email">
+                </div>
+                <div>
+                    <label for="Password">Пароль: </label><br />
+                    <input type="password" id="Password" name="Password">
+                </div>
+            </form>
+            <button id="loginBtn">Войти</button>
+            <button id="logoffBtn">Выйти</button>
+            <p>
+                <a href="register.html">Регистрация нового пользователя</a>
+            </p>
         </main>
 
         <footer class="foot">
@@ -66,7 +85,5 @@
     </div>
 
     <script src="js/scripts.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="bootstrap-4.3.1-dist/js/bootstrap.min.js"></script>
 </body>
 </html>

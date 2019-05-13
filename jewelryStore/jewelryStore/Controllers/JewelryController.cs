@@ -64,6 +64,7 @@ namespace jewelryStore.Controllers
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update([FromRoute] int id, [FromBody] Product product)
         {

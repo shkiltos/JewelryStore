@@ -215,6 +215,11 @@ function logOff() {
     request.send();
 }
 
+function isAdmin() {
+
+}
+
 // Обработка кликов по кнопкам
 document.getElementById("loginBtn").addEventListener("click", logIn);
 document.getElementById("logoffBtn").addEventListener("click", logOff);
+

@@ -132,6 +132,21 @@ namespace jewelryStore.Controllers
             };
             return Ok(msg);
         }
+
+        [HttpGet]
+        [Route("api/Account/isAdmin")]
+        //[ValidateAntiForgeryToken]
+        public async Task<IActionResult> isAdmin()
+        {
+            User usr = await GetCurrentUserAsync();
+            
+            var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
+            var msg = new
+            {
+                message
+            };
+            return Ok(msg);
+        }
         private Task<User> GetCurrentUserAsync() => _userManager.GetUserAsync(HttpContext.User);
     }
 }
