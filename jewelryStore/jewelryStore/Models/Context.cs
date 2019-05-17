@@ -12,6 +12,7 @@ namespace jewelryStore.Models
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderLine> OrderLine { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -24,15 +25,22 @@ namespace jewelryStore.Models
             });
             modelBuilder.Entity<Order>(entity =>
             {
-                entity.Property(e => e.clientId).IsRequired();
-                entity.Property(e => e.productId).IsRequired();
-                entity.Property(e => e.amount).IsRequired();
+                //entity.Property(e => e.clientId).IsRequired();
                 entity.HasOne(d => d.Client)
                 .WithMany(p => p.Order)
                 .HasForeignKey(d => d.clientId);
-                entity.HasOne(d => d.Product)
-                .WithMany(p => p.Order)
-                .HasForeignKey(d => d.productId);
+            });
+            modelBuilder.Entity<OrderLine>(entity =>
+            {
+                entity.Property(e => e.price).IsRequired();
+                entity.Property(e => e.productId).IsRequired();
+                entity.Property(e => e.orderId).IsRequired();
+                entity.Property(e => e.quantity).IsRequired();
+                entity.Property(e => e.price).IsRequired();
+                entity.HasOne(d => d.Order)
+                .WithMany(p => p.OrderLine)
+                .HasForeignKey(d => d.orderId);
+                
             });
             modelBuilder.Entity<Product>(entity =>
             {

@@ -33,7 +33,7 @@ namespace jewelryStore.Controllers
         public IEnumerable<Product> GetAll()
         {
             //return _context.Product;
-            return _context.Product.Include(p => p.Order);
+            return _context.Product/*.Include(p => p.Order)*/;
         }
 
         [HttpGet("{id}")]

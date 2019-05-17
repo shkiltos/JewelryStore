@@ -1,6 +1,6 @@
 ﻿const uri = "/api/jewelry/";
 let items = null;
-
+let isAdm = null;
 document.addEventListener("DOMContentLoaded", function (event) {
     getProducts();
     getCurrentUser();
@@ -29,46 +29,57 @@ function getCount(data) {
 }
 
 function getProducts() {
-    let request = new XMLHttpRequest();
-    request.open("GET", uri);
-    request.onload = function () {
-        let products = "";
-        let productsHTML = "";
-        products = JSON.parse(request.responseText);
+    this.isAdmin()
+        .then(
+        response => {
+            isAdm = response.message; 
 
-        if (typeof products !== "undefined") {
-            //getCount(products.length);
-            if (products.length > 0) {
-                if (products) {
-                    var i;
-                    for (i in products) {
-                        //productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
-                        //productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
-                        //productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
-                        productsHTML += '<div class="col-md-4">' +
-                                '<div class="card mb-4 shadow-sm">' +
-                                    '<img src=\"' + products[i].image + '\" width="100%" height="100%" />' +
-                            '<div class="card-body">' +
-                            '<h1>' + products[i].title + '</h1>' +
-                            '<h3>' + products[i].price + '₽</h3>' +
-                            '<p class="card-text">' + products[i].description + '</p>' +
+                let request = new XMLHttpRequest();
+                request.open("GET", uri);
+                request.onload = function () {
+                    let products = "";
+                    let productsHTML = "";
+                    products = JSON.parse(request.responseText);
+
+                    if (typeof products !== "undefined") {
+                        //getCount(products.length);
+                        if (products.length > 0) {
+                            if (products) {
+                                var i;
+                                
+                                for (i in products) {
+                                    //productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
+                                    //productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
+                                    //productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
+                                    productsHTML += '<div class="col-md-4">' +
+                                        '<div class="card mb-4 shadow-sm">' +
+                                        '<img src=\"' + products[i].image + '\" width="100%" height="100%" />' +
+                                        '<div class="card-body">' +
+                                        '<h1>' + products[i].title + '</h1>' +
+                                        '<h3>' + products[i].price + '₽</h3>' +
+                                        '<p class="card-text">' + products[i].description + '</p>' +
                                         '<div class="d-flex justify-content-between align-items-center">' +
-                                            '<div class="btn-group">' +
-                                                '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
-                                                '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>' +
-                                            '</div>' +
-                                         '</div>' +
+                                        '<div class="btn-group" style="width:100%">';
+                                    if (isAdm == "admin") {
+                                        productsHTML += '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
+                                                        '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>'
+                                    }
+                                        productsHTML += '<button type="button" style="width:100%">Add to cart</button>' +
                                         '</div>' +
-                                    '</div>' +
-                            '</div>';
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
+                            }
+                        }
+                        items = products;
+                        document.querySelector("#productsDiv" ).innerHTML = productsHTML;
                     }
-                }
-            }
-            items = products;
-            document.querySelector("#productsDiv" ).innerHTML = productsHTML;
+                };
+            request.send();
         }
-    };
-    request.send();
+        );
 }
 
 function createProduct() {
@@ -171,7 +182,7 @@ function logIn() {
     request.onreadystatechange = function () {
         // Очистка контейнера вывода сообщений
         document.getElementById("msg").innerHTML = "";
-        var mydiv = document.getElementById('formError');
+        var mydiv = document.getElementById("formError");
         while (mydiv.firstChild) {
             mydiv.removeChild(mydiv.firstChild);
         }
@@ -183,10 +194,10 @@ function logIn() {
             // Вывод сообщений об ошибках
             if (typeof msg.error !== "undefined" && msg.error.length > 0) {
                 for (var i = 0; i < msg.error.length; i++) {
-                    var ul = document.getElementsByTagName("ul");
+                    var ul = document.getElementById("formError");
                     var li = document.createElement("li");
                     li.appendChild(document.createTextNode(msg.error[i]));
-                    ul[0].appendChild(li);
+                    ul.appendChild(li);
                 }
             }
             document.getElementById("Password").value = "";
@@ -216,7 +227,29 @@ function logOff() {
 }
 
 function isAdmin() {
+    return new Promise(function(resolve, reject) {
+        var request = new XMLHttpRequest();
+        request.open("POST", "api/account/isAdmin");
 
+        request.onload = function() {
+            var response = JSON.parse(this.responseText);
+            resolve(response);
+        };
+
+        request.onerror = function () {
+            reject(new Error("Network Error"));
+        };
+
+        request.send();
+    });
+}
+
+function testIsAdmin() {
+    isAdmin()
+        .then(
+            response => alert("Response:" + response.message),
+            error => alert("Rejected:" + error.message)
+        );
 }
 
 // Обработка кликов по кнопкам

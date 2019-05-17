@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace jewelryStore.Controllers
 {
+    public delegate Task<IActionResult> OrderDelegate(Order order); //делегат создания нового заказа
+    public delegate Task<string> IdDelegate(); //делегат получения id текущего пользователя
+
     [Produces("application/json")]
     public class AccountController : Controller
     {
+        public static event OrderDelegate OrderEvent; //событие создания заказа
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
 
@@ -133,17 +137,25 @@ namespace jewelryStore.Controllers
             return Ok(msg);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("api/Account/isAdmin")]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> isAdmin()
         {
             User usr = await GetCurrentUserAsync();
-            
-            var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
+            IList<string> roles;
+            try
+            {
+                roles = await _userManager.GetRolesAsync(usr);
+            }
+            catch
+            {
+                roles = null;
+            }
+            var message = usr == null ? "Вы гость" : roles.FirstOrDefault();
             var msg = new
             {
-                message
+                message 
             };
             return Ok(msg);
         }

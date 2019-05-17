@@ -8,10 +8,6 @@ namespace jewelryStore.Models
 {
     public class Product
     {
-        public Product()
-        {
-            Order = new HashSet<Order>();
-        }
         
         public int Id { get; set; }
         public int typeId { get; set; }
@@ -21,6 +17,6 @@ namespace jewelryStore.Models
         public string image { get; set; }
 
         public virtual ProductType ProductType { get; set; }
-        public virtual ICollection<Order> Order { get; set; }
+        //public virtual ICollection<Order> Order { get; set; }
     }
 }

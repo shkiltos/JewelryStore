@@ -11,6 +11,7 @@ namespace jewelryStore.Models
         {
             Product = new HashSet<Product>();
         }
+
         public int Id { get; set; }
         public string typeName { get; set; }
         public virtual ICollection<Product> Product { get; set; }
