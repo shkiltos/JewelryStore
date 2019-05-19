@@ -8,7 +8,8 @@ namespace jewelryStore.Models
 {
     public class Product
     {
-        
+        [Required]
+        [Key]
         public int Id { get; set; }
         public int typeId { get; set; }
         public string title { get; set; }
@@ -16,7 +17,12 @@ namespace jewelryStore.Models
         public string description { get; set; }
         public string image { get; set; }
 
-        public virtual ProductType ProductType { get; set; }
-        //public virtual ICollection<Order> Order { get; set; }
+        //public virtual OrderLine OrderLine { get; set; }
+        public virtual ICollection<OrderLine> OrderLine { get; set; }
+
+        public Product()
+        {
+            OrderLine = new HashSet<OrderLine>();
+        }
     }
 }

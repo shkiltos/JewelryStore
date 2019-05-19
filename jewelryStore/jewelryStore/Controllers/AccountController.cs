@@ -20,6 +20,8 @@ namespace jewelryStore.Controllers
 
         public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
+            OrdersController.IDEvent += new IdDelegate(GetIdUserAsync);//присоединение метода к событию
+
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -70,6 +72,9 @@ namespace jewelryStore.Controllers
             }
         }
 
+        public string id = "";
+        public string role;
+        public IList<string> x;
         [HttpPost]
         [Route("api/Account/Login")]
         //[ValidateAntiForgeryToken]
@@ -123,18 +128,57 @@ namespace jewelryStore.Controllers
             return Ok(msg);
         }
 
+        [HttpGet]
+        [Route("api/Account/GetRole")]
+        public async Task<string> GetUserRole()
+        {//получение id текущего пользователя
+
+            try
+            {
+                User usr = await GetCurrentUserAsync();
+                if (usr != null)
+                {
+                    x = await _userManager.GetRolesAsync(usr);
+                    role = x.FirstOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return role;
+        }
+
         [HttpPost]
         [Route("api/Account/isAuthenticated")]
         //[ValidateAntiForgeryToken]
         public async Task<IActionResult> LogisAuthenticatedOff()
         {
             User usr = await GetCurrentUserAsync();
+            if (usr != null) id = usr.Id;
             var message = usr == null ? "Вы Гость. Пожалуйста, выполните вход." : "Вы вошли как: " + usr.UserName;
             var msg = new
             {
                 message
             };
             return Ok(msg);
+        }
+
+        [HttpGet]
+        [Route("api/Account/WhoisAuthenticated")]
+        public async Task<string> GetIdUserAsync()
+        {//получение id текущего пользователя
+            try
+            {
+                User usr = await _userManager.GetUserAsync(HttpContext.User);
+                if (usr != null) id = usr.Id;
+                //await LogisAuthenticatedOff();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+            }
+            return id;
         }
 
         [HttpPost]

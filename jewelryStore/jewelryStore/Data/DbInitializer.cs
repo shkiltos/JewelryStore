@@ -12,24 +12,12 @@ namespace jewelryStore.Data
             {
                 return;
             }
-
-            var productTypes = new ProductType[]
-            {
-                new ProductType{typeName = "Ring"},
-                new ProductType{typeName = "Necklace"},
-                new ProductType{typeName = "Bracelet"}
-            };
-            foreach (ProductType pt in productTypes)
-            {
-                context.ProductType.Add(pt);
-            }
-            context.SaveChanges();
-
+            
             var products = new Product[]
             {
-                new Product{typeId = 1, title = "Ring Model RC-M", price = 6000, description="Oxidized sterling silver ring", image = "images/ring1.jpg"},
-                new Product{typeId = 2, title = "Necklace CROW'S", price = 10000, description="Talisman necklace. Oxidized sterling silver", image ="images/necklace1.jpg"},
-                new Product{typeId = 1, title = "Rings WRS", price = 13000, description="Couple of wedding rings. Sterling silver", image="images/ring2.jpg" }
+                new Product{title = "Ring Model RC-M", price = 6000, description="Oxidized sterling silver ring", image = "images/ring1.jpg"},
+                new Product{title = "Necklace CROW'S", price = 10000, description="Talisman necklace. Oxidized sterling silver", image ="images/necklace1.jpg"},
+                new Product{title = "Rings WRS", price = 13000, description="Couple of wedding rings. Sterling silver", image="images/ring2.jpg" }
             };
             foreach (Product p in products)
             {
@@ -37,21 +25,9 @@ namespace jewelryStore.Data
             }
             context.SaveChanges();
 
-            var clients = new Client[]
-            {
-                new Client{name="Гадалов Александр",address = "Иваново"},
-                new Client{name="Булатов Николай",address = "Булатово"}
-            };
-            foreach (Client cl in clients)
-            {
-                context.Client.Add(cl);
-            }
-            context.SaveChanges();
-
             var orders = new Order[]
             {
-                new Order{clientId = 1},
-                new Order{clientId = 2}
+                new Order{userId = "dbasba"}
             };
             foreach (Order or in orders)
             {

@@ -10,25 +10,17 @@ namespace jewelryStore.Models
         { }
         #endregion
         public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<ProductType> ProductType { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderLine> OrderLine { get; set; }
-        public virtual DbSet<Client> Client { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Client>(entity =>
-            {
-                entity.Property(e => e.name).IsRequired();
-                entity.Property(e => e.address).IsRequired();
-            });
+            
             modelBuilder.Entity<Order>(entity =>
             {
-                //entity.Property(e => e.clientId).IsRequired();
-                entity.HasOne(d => d.Client)
-                .WithMany(p => p.Order)
-                .HasForeignKey(d => d.clientId);
+                entity.HasOne(d => d.User).WithMany(p => p.Order).HasForeignKey(d => d.userId);
+                entity.HasMany(a => a.OrderLine).WithOne(a => a.Order).HasForeignKey(a => a.orderId);
             });
             modelBuilder.Entity<OrderLine>(entity =>
             {
@@ -36,11 +28,9 @@ namespace jewelryStore.Models
                 entity.Property(e => e.productId).IsRequired();
                 entity.Property(e => e.orderId).IsRequired();
                 entity.Property(e => e.quantity).IsRequired();
-                entity.Property(e => e.price).IsRequired();
-                entity.HasOne(d => d.Order)
-                .WithMany(p => p.OrderLine)
-                .HasForeignKey(d => d.orderId);
-                
+                entity.HasOne(d => d.Order).WithMany(p => p.OrderLine).HasForeignKey(d => d.orderId);
+                entity.HasOne(d => d.Product).WithMany(a => a.OrderLine).HasForeignKey(d => d.productId);
+
             });
             modelBuilder.Entity<Product>(entity =>
             {
@@ -48,13 +38,11 @@ namespace jewelryStore.Models
                 entity.Property(e => e.title).IsRequired();
                 entity.Property(e => e.description).IsRequired();
                 entity.Property(e => e.typeId).IsRequired();
-                entity.HasOne(d => d.ProductType)
-                .WithMany(p => p.Product)
-                .HasForeignKey(d => d.typeId);
+                //entity.HasMany(d => d.ProductType).WithOne(p => p.Product).HasForeignKey(d => d.typeId);
             });
-            modelBuilder.Entity<ProductType>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.typeName).IsRequired();
+                entity.HasMany(a => a.Order).WithOne(b => b.User).HasForeignKey(c => c.userId);
             });
         }
     }

@@ -5,11 +5,11 @@
     <title>ASTRAL VANDAL</title>
     <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="css/cart.css" rel="stylesheet" type="text/css" />
 
-    
 </head>
 
-<body>
+<body onload="showOrder();">
     <div class="container">
         <header class="head">
             <h1 class="head__brand">
@@ -58,8 +58,34 @@
             <p>
                 <a href="register.html">Регистрация нового пользователя</a>
             </p>
-        </main>
 
+        </main>
+        <div id="CartDiv">
+
+        </div>
+        <!--<div class="row">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="images/ring3.jpg" style="width:150px; height:150px;">
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-6">
+                            Название
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            Описание описание
+                        </div>
+                        <div class="col-lg-5 col-md-6">
+                            Цена
+                        </div>
+                        <div class="col-lg-4 col-md-6">
+                            Количество
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
         <footer class="foot">
             <p class="foot__copyright">
                 Лаба © 2019<br>
@@ -85,5 +111,6 @@
     </div>
 
     <script src="js/scripts.js"></script>
+    <script src="js/cartScript.js"></script>
 </body>
 </html>

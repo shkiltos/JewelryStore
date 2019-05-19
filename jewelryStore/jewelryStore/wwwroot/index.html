@@ -7,7 +7,7 @@
     <link href="css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 
-<body>
+<body onload="">
     <div class="container">
         <header class="head">
             <h1 class="head__brand">
@@ -33,35 +33,11 @@
             </nav>
         </header>
 
-
-        <!--<h3>Вход для зарегистрированных пользователей</h3>
-        <form>
-            <div class="msgClass">
-                <div id="msgAuth"></div>
-                <div id="msg"></div>
-                <ul id="formError"></ul>
-            </div>
-            <div>
-                <label for="Email">Email: </label><br />
-                <input type="text" id="Email" name="Email">
-            </div>
-            <div>
-                <label for="Password">Пароль: </label><br />
-                <input type="password" id="Password" name="Password">
-            </div>
-        </form>
-        <button id="loginBtn">Войти</button>
-        <button id="logoffBtn">Выйти</button>
-        <p>
-            <a href="register.html">Регистрация нового пользователя</a>
-        </p>-->
-
         <div id="editDiv">
             <h3>Edit</h3>
             <form class="my-form">
                 <input type="hidden" id="edit-id">
                 <input type="text" id="edit-title">
-                <input type="number" id="edit-typeid">
                 <input type="number" id="edit-price">
                 <input type="text" id="edit-description">
                 <input type="text" id="edit-image">
@@ -82,21 +58,8 @@
             </div>
         </div>
 
-        <div class="create__new__product">
-            <h3>Add new product to list</h3>
-            <form>
-                <label for="createTitleDiv">Title:</label>
-                <input id="createTitleDiv" type="text" /><br />
-                <label for="createTypeIdDiv">Type Id:</label>
-                <input id="createTypeIdDiv" type="number" /><br />
-                <label for="createPriceDiv">Price:</label>
-                <input id="createPriceDiv" type="number" /><br />
-                <label for="createDescriptionDiv">Description:</label>
-                <input id="createDescriptionDiv" type="text" /><br />
-                <label for="createImageDiv">Image:</label>
-                <input id="createImageDiv" type="text" /><br />
-                <button onclick="createProduct(); return false;">Add</button>
-            </form>
+        <div class="create__new__product" id="createNewProduct">
+
         </div>
 
         <footer class="foot">
@@ -123,5 +86,6 @@
         </footer>
     </div>
     <script src="js/scripts.js"></script>
+    <!--<script src="js/orderScript.js"></script>-->
 </body>
 </html>

@@ -1,7 +1,28 @@
-﻿const uri = "/api/account/Register";
+﻿const uri = "api/account/Register";
+let myObj = "";
+var elForm = document.querySelector("#regForm");
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelector("#registerBtn").addEventListener("click", function () {
+        if (elForm.checkValidity() === false) {
+            event.preventDefault()
+            event.stopPropagation()
+        }
+        else {
+            logOff();
+            Register();
+        }
+        elForm.classList.add('was-validated')
+    });
+});//// Обработка клика по кнопке регистрации
+
 function Register() {
     // Считывание данных с формы
+    var fio = document.querySelector("#fio").value;
+    var userName = document.querySelector("#name").value;
     var email = document.querySelector("#email").value;
+    var address = document.querySelector("#address").value;
+    var phoneNumber = document.querySelector("#phone").value;
     var password = document.querySelector("#password").value;
     var passwordConfirm = document.querySelector("#passwordConfirm").value;
 
@@ -15,7 +36,11 @@ function Register() {
     };
     // Запрос на сервер
     request.send(JSON.stringify({
+        fio: fio,
         email: email,
+        userName: userName,
+        phoneNumber: phoneNumber,
+        address: address,
         password: password,
         passwordConfirm: passwordConfirm
     }));
@@ -35,7 +60,7 @@ function ParseResponse(e) {
     // Вывод сообщений об ошибках
     if (response.error.length > 0) {
         for (var i = 0; i < response.error.length; i++) {
-            let ul = document.querySelector("ul");
+            let ul = document.getElementById("formError");
             let li = document.createElement("li");
             li.appendChild(document.createTextNode(response.error[i]));
             ul.appendChild(li);

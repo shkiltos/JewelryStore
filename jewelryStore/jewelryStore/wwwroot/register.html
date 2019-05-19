@@ -1,39 +1,138 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <title>Register</title>
-    <style>
-        .msg-error {
-            color: red;
-        }
+    <meta charset="utf-8">
+    <title>ASTRAL VANDAL</title>
+    <link rel="stylesheet" href="bootstrap-4.3.1-dist/css/bootstrap.min.css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css" />
 
-        button {
-            margin-top: 5px;
-        }
-    </style>
+
 </head>
+
 <body>
-    <a href="Index.html">Основная страница</a>
-    <h2>Регистрация нового пользователя</h2>
-    <div class="msg-error">
-        <div id="msg"></div>
-        <ul id="formError"></ul>
+    <div class="container">
+        <header class="head">
+            <h1 class="head__brand">
+                <a class="head__brand__link" href="/homepage.html">
+                    <img class="head__brand__image" src="images/logo.png" alt="Bia Tambelli Creations">
+                </a>
+            </h1>
+            <nav class="head__menu">
+                <ul class="head__menu__list">
+                    <li class="head__menu__item head__menu__item--left">
+                        <a class="head__menu__link" href="/about.html">About</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--center">
+                        <a class="head__menu__link" href="/index.html">Products</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--center">
+                        <a class="head__menu__link" href="mailto:toha_srednii@mail.ru">Contact</a>
+                    </li>
+                    <li class="head__menu__item head__menu__item--right">
+                        <a class="head__menu__link" href="/account.html" style="border-bottom: 4px solid currentColor;">Cart</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <main class="main" id="main">
+            <div class="col-md-8 order-md-1">
+                <h4 class="mb-3"> Регистрация </h4>
+                <div class="mb-3">
+                    <p>
+                        Обратите внимание, что Пароль должен состоять из латинских букв, цифр, как минимум одной заглавной и одной строчной буквы и одного служебного символа.
+                        <br /> Поле UserName может содержать только идущие подряд латинские буквы и цифры.
+                    </p>
+                </div>
+                <div class="msg-error mb-3">
+                    <h1 id="msg"></h1>
+                    <ul id="formError"></ul>
+                </div>
+                <form class="needs-validation" id="regForm" action="javascript:void(0);" novalidate>
+                    <div class="mb-3">
+                        <label for="fio">ФИО: </label>
+                        <input type="text" id="fio" name="fio" class="form-control" placeholder="ФИО" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "ФИО" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email">Email: </label>
+                        <input type="text" id="email" name="email" class="form-control" placeholder="you@example.com" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "Email" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name"> UserName: </label>
+                        <input type="text" id="name" name="name" class="form-control" placeholder="UserName" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "UserName" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone">Номер телефона: </label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">+7</span>
+                            </div>
+                            <input type="text" id="phone" name="phone" class="form-control" placeholder="(___) ___ ____" required>
+                            <div class="invalid-feedback" style="width: 100%;">
+                                Поле "Номер телефона" обязательно к заполнению.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="address">Адрес: </label>
+                        <input type="text" id="address" name="address" class="form-control" placeholder="Адрес" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "Адрес" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password">Пароль: </label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "Пароль" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="passwordConfirm">Подтверждение пароля: </label>
+                        <input type="password" id="passwordConfirm" name="passwordConfirm" class="form-control" required>
+                        <div class="invalid-feedback" style="width: 100%;">
+                            Поле "Подтверждение пароля" обязательно к заполнению.
+                        </div>
+                    </div>
+                    <br />
+                    <button id="registerBtn" style="width:100%" type="submit">Регистрация</button>
+                </form>
+            </div>
+        </main>
+
+        
+        <footer class="foot">
+            <p class="foot__copyright">
+                Лаба © 2019<br>
+            </p>
+            <ul class="foot__share">
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="https://www.instagram.com/astral_vandal/">
+                        <img class="icon icon--lg" src="images/instagram.svg" alt="Instagram">
+                    </a>
+                </li>
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="#">
+                        <img class="icon icon--lg" src="images/facebook.svg" alt="Facebook">
+                    </a>
+                </li>
+                <li class="foot__share__item">
+                    <a class="foot__share__link" href="mailto:toha_srednii@mail.ru">
+                        <img class="icon icon--lg" src="images/envelope.svg" alt="Email">
+                    </a>
+                </li>
+            </ul>
+        </footer>
     </div>
-    <form>
-        <label for="email">Email: </label>
-        <br />
-        <input type="text" id="email" name="email">
-        <br />
-        <label for="password">Пароль: </label>
-        <br />
-        <input type="password" id="password" name="password">
-        <br />
-        <label for="passwordConfirm">Подтверждение пароля: </label>
-        <br />
-        <input type="password" id="passwordConfirm" name="passwordConfirm">
-    </form>
-    <button id="registerBtn">Регистрация</button>
 
     <script src="js/register.js"></script>
 </body>

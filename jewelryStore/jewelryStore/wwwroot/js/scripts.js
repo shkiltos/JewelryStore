@@ -1,6 +1,11 @@
 ﻿const uri = "/api/jewelry/";
+const uri1 = "/api/OrderLine/";
+const uri2 = "/api/Orders/";
 let items = null;
-let isAdm = null;
+let Role = null;
+let orders = null;
+var order = 0;
+
 document.addEventListener("DOMContentLoaded", function (event) {
     getProducts();
     getCurrentUser();
@@ -32,7 +37,7 @@ function getProducts() {
     this.isAdmin()
         .then(
         response => {
-            isAdm = response.message; 
+            Role = response.message; 
 
                 let request = new XMLHttpRequest();
                 request.open("GET", uri);
@@ -60,11 +65,11 @@ function getProducts() {
                                         '<p class="card-text">' + products[i].description + '</p>' +
                                         '<div class="d-flex justify-content-between align-items-center">' +
                                         '<div class="btn-group" style="width:100%">';
-                                    if (isAdm == "admin") {
+                                    if (Role == "admin") {
                                         productsHTML += '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
                                                         '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>'
                                     }
-                                        productsHTML += '<button type="button" style="width:100%">Add to cart</button>' +
+                                    productsHTML += '<button type="button" onclick="addToCart(' + products[i].id + "," + products[i].price + ');" style="width:100%">Add to cart</button>' +
                                         '</div>' +
                                         '</div>' +
                                         '</div>' +
@@ -74,19 +79,35 @@ function getProducts() {
                             }
                         }
                         items = products;
-                        document.querySelector("#productsDiv" ).innerHTML = productsHTML;
+                        let createProductsHTML = "";
+                        if (Role == "admin") {
+                            createProductsHTML +=
+                                '<h3>Add new product to list</h3>' +
+                                '<form>' +
+                                '<label for="createTitleDiv">Title:</label>' +
+                                '<input id="createTitleDiv" type="text" /><br />' +
+                                '<label for="createPriceDiv">Price:</label>' +
+                                '<input id="createPriceDiv" type="number" /><br />' +
+                                '<label for="createDescriptionDiv">Description:</label>' +
+                                '<input id="createDescriptionDiv" type="text" /><br />' +
+                                '<label for="createImageDiv">Image:</label>' +
+                                '<input id="createImageDiv" type="text" /><br />' +
+                                '<button onclick="createProduct(); return false;">Add</button>' +
+                                '</form>';
+                        }
+                        
+                        document.querySelector("#productsDiv").innerHTML = productsHTML;
+                        document.querySelector("#createNewProduct").innerHTML = createProductsHTML;
                     }
                 };
             request.send();
-        }
-        );
+            GetOrder();
+        });
 }
 
 function createProduct() {
     let titleText = "";
     titleText = document.querySelector("#createTitleDiv").value;
-    let typeidText = 1;
-    typeidText = document.querySelector("#createTypeIdDiv").value;
     let priceText = 0;
     priceText = document.querySelector("#createPriceDiv").value;
     let descriptionText = "";
@@ -109,15 +130,13 @@ function createProduct() {
         document.querySelector("#actionMsg").innerHTML = msg;
 
         document.querySelector("#createTitleDiv").value = "";
-        document.querySelector("#createTypeIdDiv").value = 1;
         document.querySelector("#createPriceDiv").value = 0;
         document.querySelector("#createDescriptionDiv").value = "";
         document.querySelector("#createImageDiv").value = "";
     };
     request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
     request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    //console.log(request);
-    console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, typeId: typeidText, price: priceText, description: descriptionText, image: imageText })));
+    console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, price: priceText, description: descriptionText, image: imageText })));
 }
 
 function editProduct(id) {
@@ -128,7 +147,6 @@ function editProduct(id) {
         for (i in items) {
             if (id === items[i].id) {
                 document.querySelector("#edit-id").value = items[i].id;
-                document.querySelector("#edit-typeid").value = items[i].typeId;
                 document.querySelector("#edit-title").value = items[i].title;
                 document.querySelector("#edit-price").value = items[i].price;
                 document.querySelector("#edit-description").value = items[i].description;
@@ -141,7 +159,6 @@ function editProduct(id) {
 function updateProduct() {
     const Product = {
         id: document.querySelector("#edit-id").value,
-        typeId: document.querySelector("#edit-typeid").value,
         title: document.querySelector("#edit-title").value,
         price: document.querySelector("#edit-price").value,
         description: document.querySelector("#edit-description").value,
@@ -256,3 +273,93 @@ function testIsAdmin() {
 document.getElementById("loginBtn").addEventListener("click", logIn);
 document.getElementById("logoffBtn").addEventListener("click", logOff);
 
+function addToCart(id, sum) {
+    //добавляем новое поле в промежуточную таблицу
+    try {
+        var OrderLine = {
+            'productId': id,
+            'orderId': order,
+            'quantity': 1,
+            'price': sum
+        }
+        var request = new XMLHttpRequest();
+        request.open("POST", uri1);
+        request.onload = function () {
+            // Обработка кода ответа
+            var msg = "";//сообщение
+            if (request.status === 200) {
+                msg = "Не добавлено";
+            } else if (request.status === 201) {
+                msg = "Продукт добавлен в корзину";
+                uri3 = uri2 + order;//получение текущего заказа
+                var request1 = new XMLHttpRequest();
+                request1.open("GET", uri3, false);
+                var item;///Получение данных о заказе + сумму новой ювелирки
+                request1.onload = function () {
+                    item = JSON.parse(request1.responseText);
+                    item.sumOrder += sum;//к сумме текущего заказа прибавляется стоимость книги
+                    ///Изменение данных о заказе -- отправка изменений в БД
+                    var request2 = new XMLHttpRequest();
+                    request2.open("PUT", uri3);
+                    request2.onload = function () {
+                        //loadBasket();//загрузка корзины для обновления данных о заказе
+                    };
+                    request2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                    request2.send(JSON.stringify(item));
+                };
+                request1.send();
+
+            } else if (request.status === 404) {
+                msg = "Пожалуйста, авторизируйтесь"
+            } else {
+                msg = "Неизвестная ошибка";
+            }
+            document.querySelector("#actionMsg").innerHTML = msg;//вывод сообщения
+        };
+        request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        request.send(JSON.stringify(OrderLine));//добавление строки заказа
+    } catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
+}
+
+
+function GetOrder() {//получение id текущего заказа и его отображение
+    try {
+        //GetRole();
+        getIdUser();
+        //if (Role === "user") {
+            var request2 = new XMLHttpRequest();
+            request2.open("GET", "/api/orders/");
+            orders = null;
+            request2.onload = function () {
+                if (request2.status === 200) { //если мы получили список заказов
+                    orders = JSON.parse(request2.responseText);
+
+                    for (j in orders) {//в цикле ищем заказ пользователя, который является активным
+                        if (orders[j].active === 1) {
+                            order = orders[j].id;
+                        }
+                    }          //если список заказов получить не удалось
+                } else if (request2.status !== 204) {
+                    alert("Возникла неизвестная ошибка! Попробуйте повторить позже! Статус ошибки: " + request2.status);
+                }
+            };
+            request2.send();
+        //}
+    } catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
+}
+
+
+var myObj = "";
+function getIdUser() {
+    try {
+        let request = new XMLHttpRequest();
+        request.open("GET", "/api/Account/WhoisAuthenticated", true);
+        request.onload = function () {
+            if (request.status === 200) {
+                myObj = JSON.parse(request.responseText);
+            }
+        };
+        request.send();
+    } catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
+}
