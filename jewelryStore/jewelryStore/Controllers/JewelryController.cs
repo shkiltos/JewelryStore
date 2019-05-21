@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,22 +34,37 @@ namespace jewelryStore.Controllers
         public IEnumerable<Product> GetAll()
         {
             //return _context.Product;
-            return _context.Product/*.Include(p => p.Order)*/;
+            try { return _context.Product; }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
+                return null;
+            };
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProduct([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
+            try
             {
+                if (!ModelState.IsValid)
+                {
+                    Log.WriteSuccess("JewelryController.GetProduct", "Валидация внутри контроллера неудачна.");
+                    return BadRequest(ModelState);
+                }
+                var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
+                if (product == null)
+                {
+                    Log.WriteSuccess("JewelryController.GetProduct", "Product не найден.");
+                    return NotFound();
+                }
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex);
                 return BadRequest(ModelState);
             }
-            var product = await _context.Product.SingleOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
-            return Ok(product);
         }
 
         [Authorize(Roles = "admin")]

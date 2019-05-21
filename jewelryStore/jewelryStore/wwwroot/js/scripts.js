@@ -34,109 +34,115 @@ function getCount(data) {
 }
 
 function getProducts() {
-    this.isAdmin()
-        .then(
-        response => {
-            Role = response.message; 
+    try {
+        this.isAdmin()
+            .then(
+                response => {
+                    Role = response.message;
 
-                let request = new XMLHttpRequest();
-                request.open("GET", uri);
-                request.onload = function () {
-                    let products = "";
-                    let productsHTML = "";
-                    products = JSON.parse(request.responseText);
+                    let request = new XMLHttpRequest();
+                    request.open("GET", uri);
+                    request.onload = function () {
+                        let products = "";
+                        let productsHTML = "";
+                        products = JSON.parse(request.responseText);
 
-                    if (typeof products !== "undefined") {
-                        //getCount(products.length);
-                        if (products.length > 0) {
-                            if (products) {
-                                var i;
-                                
-                                for (i in products) {
-                                    //productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
-                                    //productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
-                                    //productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
-                                    productsHTML += '<div class="col-md-4">' +
-                                        '<div class="card mb-4 shadow-sm">' +
-                                        '<img src=\"' + products[i].image + '\" width="100%" height="100%" />' +
-                                        '<div class="card-body">' +
-                                        '<h1>' + products[i].title + '</h1>' +
-                                        '<h3>' + products[i].price + '₽</h3>' +
-                                        '<p class="card-text">' + products[i].description + '</p>' +
-                                        '<div class="d-flex justify-content-between align-items-center">' +
-                                        '<div class="btn-group" style="width:100%">';
-                                    if (Role == "admin") {
-                                        productsHTML += '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
-                                                        '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>'
+                        if (typeof products !== "undefined") {
+                            //getCount(products.length);
+                            if (products.length > 0) {
+                                if (products) {
+                                    var i;
+
+                                    for (i in products) {
+                                        //productsHTML += '<div class="productText"><span>' + products[i].id + ' : ' + products[i].title + ' : ' + products[i].typeId + ' : ' + products[i].price + ' : ' + products[i].description + "<image class=\"product__image\" src=\"" + products[i].image + "\">" + ' </span>';
+                                        //productsHTML += '<button onclick="editProduct(' + products[i].id + ')">Изменить</button>';
+                                        //productsHTML += '<button onclick="deleteProduct(' + products[i].id + ')">Удалить</button></div>';
+                                        productsHTML += '<div class="col-md-4">' +
+                                            '<div class="card mb-4 shadow-sm">' +
+                                            '<img src=\"' + products[i].image + '\" width="100%"/>' +
+                                            '<div class="card-body">' +
+                                            '<h1>' + products[i].title + '</h1>' +
+                                            '<h3>' + products[i].price + '₽</h3>' +
+                                            '<p class="card-text">' + products[i].description + '</p>' +
+                                            '<div class="d-flex justify-content-between align-items-center">' +
+                                            '<div class="btn-group" style="width:100%">';
+                                        if (Role == "admin") {
+                                            productsHTML += '<button type="button" onclick="editProduct(' + products[i].id + ')">Edit</button>' +
+                                                '<button type="button" onclick="deleteProduct(' + products[i].id + ')">Delete</button>'
+                                        }
+                                        productsHTML += '<button type="button" onclick="addToCart(' + products[i].id + "," + products[i].price + ');" style="width:100%">Add to cart</button>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>' +
+                                            '</div>';
                                     }
-                                    productsHTML += '<button type="button" onclick="addToCart(' + products[i].id + "," + products[i].price + ');" style="width:100%">Add to cart</button>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>' +
-                                        '</div>';
                                 }
                             }
+                            items = products;
+                            let createProductsHTML = "";
+                            if (Role == "admin") {
+                                createProductsHTML +=
+                                    '<h3>Add new product to list</h3>' +
+                                    '<form>' +
+                                    '<label for="createTitleDiv">Title:</label>' +
+                                    '<input id="createTitleDiv" type="text" /><br />' +
+                                    '<label for="createPriceDiv">Price:</label>' +
+                                    '<input id="createPriceDiv" type="number" /><br />' +
+                                    '<label for="createDescriptionDiv">Description:</label>' +
+                                    '<input id="createDescriptionDiv" type="text" /><br />' +
+                                    '<label for="createImageDiv">Image:</label>' +
+                                    '<input id="createImageDiv" type="text" /><br />' +
+                                    '<button onclick="createProduct(); return false;">Add</button>' +
+                                    '</form>';
+                            }
+
+                            document.querySelector("#productsDiv").innerHTML = productsHTML;
+                            document.querySelector("#createNewProduct").innerHTML = createProductsHTML;
                         }
-                        items = products;
-                        let createProductsHTML = "";
-                        if (Role == "admin") {
-                            createProductsHTML +=
-                                '<h3>Add new product to list</h3>' +
-                                '<form>' +
-                                '<label for="createTitleDiv">Title:</label>' +
-                                '<input id="createTitleDiv" type="text" /><br />' +
-                                '<label for="createPriceDiv">Price:</label>' +
-                                '<input id="createPriceDiv" type="number" /><br />' +
-                                '<label for="createDescriptionDiv">Description:</label>' +
-                                '<input id="createDescriptionDiv" type="text" /><br />' +
-                                '<label for="createImageDiv">Image:</label>' +
-                                '<input id="createImageDiv" type="text" /><br />' +
-                                '<button onclick="createProduct(); return false;">Add</button>' +
-                                '</form>';
-                        }
-                        
-                        document.querySelector("#productsDiv").innerHTML = productsHTML;
-                        document.querySelector("#createNewProduct").innerHTML = createProductsHTML;
-                    }
-                };
-            request.send();
-            GetOrder();
-        });
+                    };
+                    request.send();
+                    GetOrder();
+                });
+    }
+    catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
 }
 
 function createProduct() {
-    let titleText = "";
-    titleText = document.querySelector("#createTitleDiv").value;
-    let priceText = 0;
-    priceText = document.querySelector("#createPriceDiv").value;
-    let descriptionText = "";
-    descriptionText = document.querySelector("#createDescriptionDiv").value;
-    let imageText = "";
-    imageText = document.querySelector("#createImageDiv").value;
-    var request = new XMLHttpRequest();
-    request.open("POST", uri);
-    request.onload = function () {
-        // Обработка кода ответа
-        var msg = "";
-        if (request.status === 401) {
-            msg = "У вас не хватает прав для создания";
-        } else if (request.status === 201) {
-            msg = "Запись добавлена";
-            getProducts();
-        } else {
-            msg = "Неизвестная ошибка";
-        }
-        document.querySelector("#actionMsg").innerHTML = msg;
+    try {
+        let titleText = "";
+        titleText = document.querySelector("#createTitleDiv").value;
+        let priceText = 0;
+        priceText = document.querySelector("#createPriceDiv").value;
+        let descriptionText = "";
+        descriptionText = document.querySelector("#createDescriptionDiv").value;
+        let imageText = "";
+        imageText = document.querySelector("#createImageDiv").value;
+        var request = new XMLHttpRequest();
+        request.open("POST", uri);
+        request.onload = function () {
+            // Обработка кода ответа
+            var msg = "";
+            if (request.status === 401) {
+                msg = "У вас не хватает прав для создания";
+            } else if (request.status === 201) {
+                msg = "Запись добавлена";
+                getProducts();
+            } else {
+                msg = "Неизвестная ошибка";
+            }
+            document.querySelector("#actionMsg").innerHTML = msg;
 
-        document.querySelector("#createTitleDiv").value = "";
-        document.querySelector("#createPriceDiv").value = 0;
-        document.querySelector("#createDescriptionDiv").value = "";
-        document.querySelector("#createImageDiv").value = "";
-    };
-    request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, price: priceText, description: descriptionText, image: imageText })));
+            document.querySelector("#createTitleDiv").value = "";
+            document.querySelector("#createPriceDiv").value = 0;
+            document.querySelector("#createDescriptionDiv").value = "";
+            document.querySelector("#createImageDiv").value = "";
+        };
+        request.setRequestHeader("Accepts", "application/json;charset=UTF-8");
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        console.log(request.send(JSON.stringify({ typeId: 1, title: titleText, price: priceText, description: descriptionText, image: imageText })));
+    }
+    catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
 }
 
 function editProduct(id) {
@@ -157,30 +163,36 @@ function editProduct(id) {
 }
 
 function updateProduct() {
-    const Product = {
-        id: document.querySelector("#edit-id").value,
-        title: document.querySelector("#edit-title").value,
-        price: document.querySelector("#edit-price").value,
-        description: document.querySelector("#edit-description").value,
-        image: document.querySelector("#edit-image").value
-    };
-    var request = new XMLHttpRequest();
-    request.open("PUT", uri + Product.id);
-    request.onload = function () {
-        getProducts();
-        closeInput();
-    };
-    request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    console.log(request.send(JSON.stringify(Product)));
+    try {
+        const Product = {
+            id: document.querySelector("#edit-id").value,
+            title: document.querySelector("#edit-title").value,
+            price: document.querySelector("#edit-price").value,
+            description: document.querySelector("#edit-description").value,
+            image: document.querySelector("#edit-image").value
+        };
+        var request = new XMLHttpRequest();
+        request.open("PUT", uri + Product.id);
+        request.onload = function () {
+            getProducts();
+            closeInput();
+        };
+        request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        console.log(request.send(JSON.stringify(Product)));
+    }
+    catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
 }
 
 function deleteProduct(id) {
-    let request = new XMLHttpRequest();
-    request.open("DELETE", uri + id, false);
-    request.onload = function () {
-        getProducts();
-    };
-    request.send();
+    try {
+        let request = new XMLHttpRequest();
+        request.open("DELETE", uri + id, false);
+        request.onload = function () {
+            getProducts();
+        };
+        request.send();
+    }
+    catch (e) { alert("Возникла непредвиденая ошибка! Попробуйте позже!"); }
 }
 
 function closeInput() {
